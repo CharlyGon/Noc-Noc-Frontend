@@ -143,6 +143,23 @@ export const createNewTask = async (newTask, token) => {
     }
 }
 
+export const getAllTasks = async (token) => {
+    try {
+        const response = await axios.get('http://127.0.0.1:8000/api/tasks', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        });
+console.log("RESPONSE", response.data.tasks);
+        return response.data.tasks;
+    }
+    catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
 export const fetchData = async () => {
     try {
         const token = store.state.token;

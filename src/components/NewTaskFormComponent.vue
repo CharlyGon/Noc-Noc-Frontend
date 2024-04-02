@@ -33,10 +33,8 @@
           <option v-for="user in userList" :key="user.id" :value="user.id">{{ user.name }}</option>
         </select>
       </div>
-      <button type="submit"
-              :class="{'opacity-50 cursor-not-allowed': !isFormValid}"
-              :disabled="!isFormValid"
-              class="bg-blue-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-blue-600">
+      <button type="submit" :class="{ 'opacity-50 cursor-not-allowed': !isFormValid }" :disabled="!isFormValid"
+        class="bg-blue-500 text-white px-6 py-3 rounded-md shadow-md hover:bg-blue-600">
         Crear Tarea
       </button>
     </form>
@@ -61,6 +59,7 @@ const title = ref('');
 const description = ref('');
 const status = ref('Pendiente');
 const assigned_to = ref('');
+const assignedToName = ref('');
 const userList = ref([]);
 const successMessage = ref('');
 const errorMessage = ref('');
@@ -75,9 +74,17 @@ const createTask = async () => {
   if (!isFormValid.value) {
     return; // Prevenir la ejecución si el formulario no es válido
   }
+  
+  const selectedUser = userList.value.find(user => user.id === assigned_to.value);
+  const assigned_to_name = selectedUser ? selectedUser.name : '';
 
-
-  const newTask = { title: title.value, description: description.value, status: status.value, assigned_to: assigned_to.value };
+  const newTask = {
+    title: title.value,
+    description: description.value,
+    status: status.value,
+    assigned_to: assigned_to.value,
+    assigned_to_name: assigned_to_name
+  };
   const response = await createNewTask(newTask, token);
 
 

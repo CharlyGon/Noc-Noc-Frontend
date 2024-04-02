@@ -8,7 +8,7 @@
         <p class="text-gray-600">{{ task.description }}</p>
         <div class="mt-4">
           <span class="px-2 py-1 bg-gray-200 text-gray-800 text-sm rounded-md">{{ task.status }}</span>
-          <span class="ml-2">{{ task.assigned_to }}</span>
+          <span class="ml-2">{{ task.assigned_to_name }}</span>
         </div>
       </div>
     </div>
@@ -25,13 +25,28 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+import { getAllTasks } from '../api/api';
+import { ref,onMounted } from 'vue';
 
+const store = useStore();
+const token = store.state.token;
 const router = useRouter();
 
+let tasks = ref([]);
+
+const fetchTasks = async () => {
+  const response = await getAllTasks(token);
+  tasks.value = response;
+  console.log("tasks obtenidas",tasks.value);
+};
+
 const createNewTask = () => {
-  // Navegar al componente NewTaskForm.vue
   router.push('/create-task');
 };
+onMounted(() => {
+  fetchTasks();
+});
 
 </script>
 
