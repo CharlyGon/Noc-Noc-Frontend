@@ -38,18 +38,23 @@ const handleSubmit = async () => {
     try {
         const token = store.state.token;
         if (!token) {
-            console.error('No se encontró el token de autorización.');
-            return;
+            throw new Error('No se encontró el token de autorización.');
         }
-        console.log('Datos del formulario:', formData.value);
 
         const response = await registerUser(formData.value, token);
 
-        formData.value.name = '';
-        formData.value.email = '';
-        console.log('Respuesta del servidor:', response);
+        resetFormData();
     } catch (error) {
-        console.error('Error al crear usuario:', error);
+        handleError(error);
     }
+};
+
+const resetFormData = () => {
+    formData.value.name = '';
+    formData.value.email = '';
+};
+
+const handleError = (error) => {
+    console.error('Error al crear usuario:', error);
 };
 </script>

@@ -8,7 +8,6 @@ import ChangePasswordComponent from '../components/ChangePasswordComponent.vue';
 import TasksListComponent from '../components/TasksListComponent.vue';
 import NewTaskFormComponent from '../components/NewTaskFormComponent.vue';
 
-
 const routes = [
   {
     path: '/',

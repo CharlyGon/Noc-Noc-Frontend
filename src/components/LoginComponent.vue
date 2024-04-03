@@ -55,18 +55,16 @@
 </template>
 
 <script setup>
-import { loginUser } from '../api/api.js'
-import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
-import { ref } from 'vue'
-
-let email = '';
-let password = '';
-let errorMessage = ref('');
+import { loginUser } from '../api/api.js';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+import { ref } from 'vue';
 
 const store = useStore();
 const router = useRouter();
-
+const errorMessage = ref('');
+let email = '';
+let password = '';
 
 const handleSubmit = async () => {
     try {
@@ -74,8 +72,7 @@ const handleSubmit = async () => {
         const token = response.access_token;
 
         if (response.should_change_password) {
-            await store.dispatch('setToken', token);
-            await handleShouldChangePassword();
+            await handleShouldChangePassword(token);
         } else {
             await handleLoginSuccess(token);
         }
@@ -84,8 +81,8 @@ const handleSubmit = async () => {
     }
 };
 
-const handleShouldChangePassword = async () => {
-    await handleLoginSuccess();
+const handleShouldChangePassword = async (token) => {
+    await handleLoginSuccess(token);
     router.push('/changePassword');
 };
 
@@ -99,8 +96,8 @@ const handleLoginSuccess = async (token) => {
 };
 
 const handleError = (error) => {
-    errorMessage.value = "Error logging in. Please try again later.";
+    errorMessage.value = 'Error logging in. Please try again later.';
     console.error('Error al enviar los datos:', error);
 };
-
 </script>
+

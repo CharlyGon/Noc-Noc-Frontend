@@ -80,8 +80,6 @@
             </div>
         </nav>
     </div>
-
-   
 </template>
 
 <script setup>

@@ -40,7 +40,6 @@ export const registerUser = async (formData, token) => {
 
 export const getAllUsers = async (token) => {
     try {
-        console.log("TOKEN GET ALL USER", token);
         const response = await axios.get('http://127.0.1:8000/api/get-all-users', {
             headers: {
                 'Content-Type': 'application/json',
@@ -133,8 +132,7 @@ export const createNewTask = async (newTask, token) => {
                 'Authorization': token
             }
         });
-
-        console.log("RESPONSE", response);
+        ;
         return response.data;
     }
     catch (error) {
@@ -151,7 +149,7 @@ export const getAllTasks = async (token) => {
                 'Authorization': token
             }
         });
-console.log("RESPONSE", response.data.tasks);
+
         return response.data.tasks;
     }
     catch (error) {
