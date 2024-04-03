@@ -20,6 +20,11 @@
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 block mx-auto">Register
                 new account</button>
         </form>
+
+        <div class="text-center mt-4">
+            <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p>
+            <p v-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>
+        </div>
     </div>
 </template>
 
@@ -33,6 +38,8 @@ const formData = ref({
     name: '',
     email: ''
 });
+const successMessage = ref('');
+const errorMessage = ref('');
 
 const handleSubmit = async () => {
     try {
@@ -41,9 +48,14 @@ const handleSubmit = async () => {
             throw new Error('No se encontró el token de autorización.');
         }
 
-        const response = await registerUser(formData.value, token);
+        await registerUser(formData.value, token);
 
         resetFormData();
+        successMessage.value = 'Usuario creado exitosamente';
+
+        setTimeout(() => {
+            successMessage.value = '';
+        }, 3000);
     } catch (error) {
         handleError(error);
     }
@@ -55,6 +67,7 @@ const resetFormData = () => {
 };
 
 const handleError = (error) => {
+    errorMessage.value = 'Error al crear usuario';
     console.error('Error al crear usuario:', error);
 };
 </script>
