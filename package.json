@@ -11,8 +11,10 @@
   "dependencies": {
     "@tailwindcss/forms": "^0.5.7",
     "axios": "^1.6.8",
+    "jwt-decode": "^4.0.0",
     "vue": "^3.4.21",
     "vue-router": "^4.0.13",
+    "vuedraggable": "^4.1.0",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
