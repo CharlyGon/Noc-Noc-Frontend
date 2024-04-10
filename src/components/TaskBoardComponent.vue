@@ -37,31 +37,33 @@ onMounted(async () => {
     tasks.value = await getAllTasks();
 });
 
-function filteredTasks(status) {
+const filteredTasks = (status) => {
     return tasks.value.filter(task => task.status === status);
 }
 
-function isUserAssigned(task) {
+const isUserAssigned = (task) => {
     return task.assigned_to === currentUserId;
 }
 
-async function handleEndDrag(event) {
+const handleEndDrag = async (event) => {
     const newStatus = findDataStatus(event.to);
     const taskId = parseInt(event.item.dataset.id, 10);
-    const taskIndex = tasks.value.findIndex(task => task.id === taskId);
+    let movedTask = tasks.value.find(task => task.id === taskId);
 
-    if (taskIndex !== -1 && newStatus !== undefined) {
-        tasks.value[taskIndex].status = newStatus;
-        console.log('Updating task status:', taskId, newStatus);
+    if (movedTask && newStatus !== undefined) {
+        movedTask.status = newStatus;
+        tasks.value = tasks.value.filter(task => task.id !== taskId);
+        tasks.value.push(movedTask);
+
         try {
             await updateTaskApi(taskId, newStatus, token);
         } catch (error) {
             console.error('Error updating task status:', error);
         }
     }
-}
+};
 
-function findDataStatus(element) {
+const findDataStatus = (element) => {
     while (element && !element.dataset.status) {
         element = element.parentElement;
     }
