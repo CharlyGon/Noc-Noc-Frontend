@@ -23,6 +23,9 @@ function close() {
 
 <style scoped>
 .task-detail {
-    /* Estilos para tu componente de detalle de tarea */
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
 }
 </style>
