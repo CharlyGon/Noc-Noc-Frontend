@@ -7,7 +7,7 @@
                 @end="handleEndDrag">
                 <template #item="{ element }">
                     <div :data-id="element.id" :key="element.id"
-                        :class="['task bg-white p-2 shadow mb-2', { 'bg-beige': isUserAssigned(element) }]">
+                        :class="['task bg-white p-2 shadow mb-2 hover:border-black border-2 border-transparent', { 'bg-beige': isUserAssigned(element) }]">
                         <h3>{{ element.title }}</h3>
                         <p>{{ element.description }}</p>
                         <p>Asignado a: {{ element.assigned_to_name || 'N/A' }}</p>
@@ -20,6 +20,7 @@
         </div>
     </div>
 </template>
+
 
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -75,6 +76,10 @@ const findDataStatus = (element) => {
 .task-board {
     display: flex;
     justify-content: space-between;
+}
+
+.column {
+    flex: 1;
 }
 
 .column-highlight {
