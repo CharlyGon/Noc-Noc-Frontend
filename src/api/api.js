@@ -177,6 +177,47 @@ export const updateTaskApi = async (id, newStatus, token) => {
     }
 }
 
+export const createNewComment = async (task_id, comment, token) => {
+    try {
+        const response = await axios.post('http://127.0.0.1:8000/api/comments', {
+            "task_id": task_id,
+            "body": comment
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        });
+
+        return response.data;
+    }
+    catch (error) {
+        console.error('Response data:', error.response?.data);
+        console.error('Status code:', error.response?.status);
+        throw error;
+    }
+}
+
+export const getCommentsByTaskId = async (task_id, token) => {
+    try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/comments`, {
+            params: {
+                task_id: task_id
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }
+        });
+
+        return response.data.comments;
+    }
+    catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
 export const fetchData = async () => {
     try {
         const token = store.state.token;

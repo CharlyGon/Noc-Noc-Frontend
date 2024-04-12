@@ -8,6 +8,7 @@ import ChangePasswordComponent from '../components/ChangePasswordComponent.vue';
 import TasksListComponent from '../components/TasksListComponent.vue';
 import NewTaskFormComponent from '../components/NewTaskFormComponent.vue';
 import TaskBoardComponent from '../components/TaskBoardComponent.vue';
+import TaskDetailsComponent from '../components/TaskDetailsComponent.vue';
 
 const routes = [
   {
@@ -52,6 +53,10 @@ const routes = [
         path: '/tasksBoard',
         name: 'TasksBoard',
         component: TaskBoardComponent
+      },{
+        path:'/taskDetail',
+        name:'TaskDetail',
+        component: TaskDetailsComponent
       }
     ]
   }

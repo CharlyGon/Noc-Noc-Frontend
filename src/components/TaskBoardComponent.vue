@@ -6,7 +6,7 @@
             <draggable class="dragArea flex-1" :list="filteredTasks(status)" group="tasks" itemKey="id"
                 @end="handleEndDrag">
                 <template #item="{ element }">
-                    <div :data-id="element.id" :key="element.id"
+                    <div @click="handleClick(element)" :data-id="element.id" :key="element.id"
                         :class="['task bg-white p-2 shadow mb-2 hover:border-black border-2 border-transparent', { 'bg-beige': isUserAssigned(element) }]">
                         <h3>{{ element.title }}</h3>
                         <p>{{ element.description }}</p>
@@ -19,6 +19,7 @@
             </draggable>
         </div>
     </div>
+    <task-details-component v-if="showModal" :task="selectedTask" @close="showModal = false" />
 </template>
 
 
@@ -27,12 +28,15 @@ import { ref, onMounted } from 'vue';
 import draggable from 'vuedraggable';
 import { getAllTasks, updateTaskApi } from '../api/api';
 import { useStore } from 'vuex';
+import TaskDetailsComponent from './TaskDetailsComponent.vue';
 
 const store = useStore();
 const tasks = ref([]);
 const statuses = ['Pendiente', 'En proceso', 'Bloqueado', 'Completado'];
 const token = store.state.token;
 const currentUserId = store.state.userId;
+const showModal = ref(false);
+const selectedTask = ref(null);
 
 onMounted(async () => {
     tasks.value = await getAllTasks();
@@ -70,6 +74,11 @@ const findDataStatus = (element) => {
     }
     return element ? element.dataset.status : undefined;
 }
+
+const handleClick = (task) => {
+    selectedTask.value = task;
+    showModal.value = true;
+};
 </script>
 
 <style scoped>
